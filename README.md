@@ -77,13 +77,61 @@
 
 - PC의 CPU, Memory 사용량 등을 모니터링합니다.
 - 기본적으로 다음과 같이 모니터링을 진행합니다.
-  1. PC 정보 수집 (Prometeus 제공 프로그램 사용)
+  1. Docker로 띄운 NodeExporter(PC 정보 수집, Prometeus 제공 프로그램 사용)로 정보 수집
   2. Docker로 띄운 Prometeus로 정보 전송
   3. Docker로 띄운 Grafana로 정보 모니터링
  
 * 참조 사이트 : https://developer-nyong.tistory.com/49
 
-### 1. PC 정보 수집 프로그램 셋팅
+- 위 세가지 조건을 만족하도록 Docker-compose를 작성합니다.
+  ```yml
+  version: '3'
 
+  services:
 
+    node-exporter:
+      image: prom/node-exporter
+      ports:
+        - 9100:9100
 
+    prometheus:
+      image: prom/prometheus
+      container_name: prometheus
+      volumes:
+        - ./prometheus.yml:/prometheus/prometheus.yml:ro
+      ports:
+        - 19090:9090
+      command:
+        - "--web.enable-lifecycle"
+      restart: always
+      networks:
+        - promnet
+      user: root
+
+    grafana:
+      image: grafana/grafana
+      container_name: grafana
+      volumes:
+        - ./grafana-volume:/var/lib/grafana
+      restart: always
+      networks:
+        - promnet
+      ports:
+        - 13030:3000
+      user: root
+
+  networks:
+    promnet:
+      driver: bridge
+  ```
+- 그리고 prometeus.yml을 작성하여 환경을 설정합니다.
+  ```yml
+  global:
+    scrape_interval: 10s
+    evaluation_interval: 10s # rule 을 얼마나 빈번하게 검증
+  scrape_configs:
+    - job_name: 'monitoring'
+      metrics_path: /metrics # default
+      static_configs:
+        - targets: ['domain:port']
+  ```
