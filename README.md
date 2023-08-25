@@ -86,9 +86,7 @@
 - 위 세가지 조건을 만족하도록 Docker-compose를 작성합니다.
   ```yml
   version: '3'
-
   services:
-
     node-exporter:
       image: prom/node-exporter
       ports:
@@ -96,29 +94,15 @@
 
     prometheus:
       image: prom/prometheus
-      container_name: prometheus
-      volumes:
-        - ./prometheus.yml:/prometheus/prometheus.yml:ro
       ports:
-        - 19090:9090
-      command:
-        - "--web.enable-lifecycle"
-      restart: always
-      networks:
-        - promnet
-      user: root
+        - 9090:9090
+      volumes:
+        - ./prometheus.yml:/etc/prometheus/prometheus.yml
 
     grafana:
       image: grafana/grafana
-      container_name: grafana
-      volumes:
-        - ./grafana-volume:/var/lib/grafana
-      restart: always
-      networks:
-        - promnet
       ports:
-        - 13030:3000
-      user: root
+        - 3000:3000
 
   networks:
     promnet:
@@ -127,11 +111,10 @@
 - 그리고 prometeus.yml을 작성하여 환경을 설정합니다.
   ```yml
   global:
-    scrape_interval: 10s
-    evaluation_interval: 10s # rule 을 얼마나 빈번하게 검증
+    scrape_interval:     15s
+
   scrape_configs:
-    - job_name: 'monitoring'
-      metrics_path: /metrics # default
+    - job_name: 'node-exporter'
       static_configs:
-        - targets: ['domain:port']
+        - targets: ['node-exporter:9100']
   ```
