@@ -54,7 +54,7 @@
       $CPUUsage = $process.CPU
       $MemoryUsage = $process.WorkingSet
   
-      $Output = "$CurrentTime	CPU Usage:	 $CPUUsage, 	Memory Usage:	 $MemoryUsage"
+      $Output = "$CurrentTime	CPU Usage:	 $CPUUsage 	Memory Usage:	 $MemoryUsage"
 
       # 로그 파일에 기록
       Add-Content -Path $LogFilePath -Value $Output
