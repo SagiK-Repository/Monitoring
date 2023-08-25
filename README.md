@@ -70,4 +70,20 @@
 - 이를 (.ps1) 파일로 저장하여 스크립트 파일로 만들어 실행할 수 있도록 합니다.  
   ![image](https://github.com/SagiK-Repository/Monitoring/assets/66783849/02c33b6e-8cae-4fce-a903-72ac148fb632)
 
-  
+
+<br><br>
+
+# Docker Grafana Prometeus 활용한 모니터링
+
+- PC의 CPU, Memory 사용량 등을 모니터링합니다.
+- 기본적으로 다음과 같이 모니터링을 진행합니다.
+  1. PC 정보 수집 (Prometeus 제공 프로그램 사용)
+  2. Docker로 띄운 Prometeus로 정보 전송
+  3. Docker로 띄운 Grafana로 정보 모니터링
+ 
+* 참조 사이트 : https://developer-nyong.tistory.com/49
+
+### 1. PC 정보 수집 프로그램 셋팅
+
+
+
