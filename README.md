@@ -83,7 +83,7 @@
  
 * 참조 사이트 : https://developer-nyong.tistory.com/49
 
-- 위 세가지 조건을 만족하도록 Docker-compose를 작성합니다.
+- 위 세가지 조건을 만족하도록 Docker-compose를 작성합니다. (docker-compose.yml)
   ```yml
   version: '3'
   services:
@@ -118,3 +118,11 @@
       static_configs:
         - targets: ['node-exporter:9100']
   ```
+- 다음 명령어를 통해 실행합니다.
+  ```shell
+  cd "Docker-Compose Directory"
+  docker-compose -f docker-compose.yml up -d
+  ```  
+  - 다음과 같이 설치가 되며 실행 됩니다.  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/b6d61196-cbf1-46cd-aaa3-0f2bea272548"/>
+
