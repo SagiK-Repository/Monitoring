@@ -124,5 +124,7 @@
   docker-compose -f docker-compose.yml up -d
   ```  
   - 다음과 같이 설치가 되며 실행 됩니다.  
-  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/b6d61196-cbf1-46cd-aaa3-0f2bea272548"/>
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/b6d61196-cbf1-46cd-aaa3-0f2bea272548"/>  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/b36b72c0-6e44-4335-9252-605d0489f9d9"/>
+
 
