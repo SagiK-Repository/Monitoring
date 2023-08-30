@@ -139,7 +139,7 @@
 
 # Docker Grafana Prometeus 활용한 다중 PC 모니터링
 
-- 기존 [Docker Grafana Prometeus 활용한 모니터링](#docker-grafana-prometeus-%ED%99%9C%EC%9A%A9%ED%95%9C-%EB%AA%A8%EB%8B%88%ED%84%B0%EB%A7%81)
+- 기존 [Docker Grafana Prometeus 활용한 모니터링](#docker-grafana-prometeus-활용한-모니터링)
 
 
 
