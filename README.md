@@ -290,11 +290,10 @@
 - 작성중...
 
 
-
-
 <br/>
 
-<details><summary>보다 더 자세히 알아보기</summary>
+<details>  
+<summary>보다 더 자세히 알아보기</summary>  
 
 ### BugRoger nvidia-expoter
 
@@ -342,5 +341,7 @@
   ```shell
   docker run -d --gpus all -p 19101:9401 --name=nvidia-smi-exporter juhyung1021/bugroger-nvidia-smi-exporter:latest
   ```  
-  
+
+
 </details>
+
