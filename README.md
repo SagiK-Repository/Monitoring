@@ -8,6 +8,7 @@
 ### 목표
 - [x] : [Process Poweshell 모니터링](#process-poweshell-모니터링)
 - [x] : Docker Grafana Prometeus 활용한 모니터링
+- [ ] : Docker Grafana Prometeus 활용한 다중 PC 모니터링
 
 ### 제작자
 [@SAgiKPJH](https://github.com/SAgiKPJH)
