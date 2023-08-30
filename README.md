@@ -8,7 +8,7 @@
 ### 목표
 - [x] : [Process Poweshell 모니터링](#process-poweshell-모니터링)
 - [x] : [Docker Grafana Prometeus 활용한 모니터링](#docker-grafana-prometeus-활용한-모니터링)
-- [ ] : [Docker Grafana Prometeus 활용한 다중 PC 모니터링](#docker-grafana-prometeus-활용한-다중-pc-모니터링)
+- [x] : [Docker Grafana Prometeus 활용한 다중 PC 모니터링](#docker-grafana-prometeus-활용한-다중-pc-모니터링)
 
 ### 제작자
 [@SAgiKPJH](https://github.com/SAgiKPJH)
@@ -197,8 +197,10 @@
   <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/2c9a2335-2fff-48d5-b3dd-cbabb4a7e25d"/>  
   <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/22b98722-09ab-4f8b-b002-1af1ae9cdd80"/>  
 - http://http://localhost:19090에 접근하여 Prometheus가 정상 수집하는지 확인한다.
-  - Status > Targets
+  - Status > Targets  
   <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/66b75e1a-069a-4f15-95b0-4bce74b7bd41"/>
+- 다음과 같이 상태를 확인할 수 있습니다.   
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/9a9f42c5-3b12-4314-86d7-fa20fe269ee4"/>  
 
 
 
