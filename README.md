@@ -9,6 +9,7 @@
 - [x] : [Process Poweshell 모니터링](#process-poweshell-모니터링)
 - [x] : [Docker Grafana Prometeus 활용한 모니터링](#docker-grafana-prometeus-활용한-모니터링)
 - [x] : [Docker Grafana Prometeus 활용한 다중 PC 모니터링](#docker-grafana-prometeus-활용한-다중-pc-모니터링)
+- [ ] : [Docker Grafana Prometeus 활용한 nvidia GPU 모니터링](#docker-grafana-prometeus-활용한-nvidia-gpu-모니터링)
 
 ### 제작자
 [@SAgiKPJH](https://github.com/SAgiKPJH)
@@ -186,7 +187,6 @@
   ```
 - 다음 명령어를 통해 실행합니다.
   ```shell
-  cd "Docker-Compose Directory"
   docker-compose -f docker-compose.yml up -d
   ```  
   <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/5b74553f-a249-427e-8509-6bb8496b32bf"/>  
@@ -201,7 +201,146 @@
   <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/66b75e1a-069a-4f15-95b0-4bce74b7bd41"/>
 - 다음과 같이 상태를 확인할 수 있습니다.   
   <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/9a9f42c5-3b12-4314-86d7-fa20fe269ee4"/>  
+- Docker Compose를 Down을 할 때는 다음과 같이 합니다.
+  ```bash
+  docker-compose -f docker-compose.yml down 
+  ```
+
+
+<br/><br/>
+
+# Docker Grafana Prometeus 활용한 nvidia GPU 모니터링
+
+- Nvidia smi Expoter를 통해 GPU 상태를 모니터링 합니다.
+
+### utkuozdemir nvidia_gpu_exporter
+- 활용할 nvidia-smi-expoter은 다음과 같습니다.
+  - [GitHub utkuozdemir/nvidia_gpu_exporter](https://github.com/utkuozdemir/nvidia_gpu_exporter)
+  - [Grafana utkuozdemir/nvidia_gpu_exporter](https://grafana.com/grafana/dashboards/14574-nvidia-gpu-metrics/)
+  - [Docker Hub utkuozdemir/nvidia_gpu_exporter](https://hub.docker.com/r/utkuozdemir/nvidia_gpu_exporter)
+- 다음과 같이 Docker Run 합니다. 
+  ```bash
+  docker run -d --name nvidia-exporter --privileged -p 19101:9835 utkuozdemir/nvidia_gpu_exporter:1.2.0
+  ```  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/8da99dcd-72f9-4123-abcb-d11540742923" />
+- [Docker Grafana Prometeus 활용한 다중 PC 모니터링](#docker-grafana-prometeus-활용한-다중-pc-모니터링)와 같이 prometheus.yml파일을 수정합니다.
+  ```yml
+  global:
+    scrape_interval:     15s
+
+  scrape_configs:
+    - job_name: 'node-exporter-170-3'
+      static_configs:
+        - targets: ['192.168.170.3:19100']
+    - job_name: 'node-exporter-100-185'
+      static_configs:
+        - targets: ['192.168.100.185:19100']
+    - job_name: 'node-exporter-70-27'
+      static_configs:
+        - targets: ['192.168.70.27:19100']
+
+    - job_name: 'node-exporter-100-185-GPU'
+      static_configs:
+        - targets: ['192.168.100.185:19101']
+    - job_name: 'node-exporter-70-27-GPU'
+      static_configs:
+        - targets: ['192.168.70.27:19101']
+  ```
+- Grafana ID를 14574로 입력하여 Load합니다.
+
+
+### Grafana 내용 수정
+- 현재 GPU의 Grafana는 단일 Job에 대해서 동작합니다.
+- 이를 여러 Job을 선택할 수 있도록 개선합니다.
+- 생성한 GPU의 DashBoard에서 Settings (톱니바퀴) > Variables > [+ New Variable]
+- New Variable Job
+  - Name : job
+  - Label : Job
+  - Query
+    - Type : Label values
+    - Label : job
+    - Metric : node_uname_info
+  - Sort : Alphabetical (asc)  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/fcf218e6-9cff-4a79-b811-2d833f5c3cb6" />  
+- New Variable node
+  - Name : node
+  - Label : Host:
+  - Query
+    - Type : Label values
+    - Label : instance
+    - Metric : node_uname_info
+    - Label filters : job = $job
+  - Sort : Alphabetical (asc)  
+ <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/38c57da1-189e-403e-83c7-471dfb45ec2e" />  
+- Variable 생성시 맨아래 Run Query가 존재합니다. 이를 통해 정확한 값이 나오는지 확인합니다.  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/45fec894-e742-4d8e-a243-81bf0070b010" />  
+- 다음과 같이 Variable를 확인합니다.  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/52078f34-0277-4353-b435-08bf4a3b23fe" />  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/2a76b664-3a31-4223-82ac-d7a7caf352af" />
+- 이후 각 DashBoard Item의 값을 다음과 같이 수정(Edit)합니다.
+  - Edit > Query
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/4de2772d-2203-404c-b4a6-debeb7a06cb3" />  
+  ```json
+  # As-Is
+  nvidia_smi_utilization_gpu_ratio{uuid="$gpu"}
+
+  # To-Be
+  nvidia_smi_utilization_gpu_ratio{instance="$node", job="$job", uuid="$gpu"}
+  ```
+- 작성중...
 
 
 
+
+<br/>
+
+<details><summary>보다 더 자세히 알아보기</summary>
+
+### BugRoger nvidia-expoter
+
+- 활용할 nvidia-smi-expoter은 다음과 같습니다.
+  - [Grafana BugRoger Nvidia-smi-exporter](https://grafana.com/grafana/dashboards/6387-gpus/)
+  - [GitHub BugRoger/nvidia-smi-exporter](https://github.com/BugRoger/nvidia-exporter)
+  - [Docker Hub bugroger/nvidia-exporter](https://hub.docker.com/r/bugroger/nvidia-exporter)
+- 다음과 같이 Docker Run 합니다. 
+  ```bash
+  docker run -d --name nvidia-exporter --privileged -p 19101:9401 bugroger/nvidia-exporter:latest
+  ```
+- 정상동작 함을 접속하여 확인합니다. (http://localhost:19101/metrics)  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/3fbfc7dc-9fd8-4cbd-baa4-c86dc7993630" />  
+- [Docker Grafana Prometeus 활용한 다중 PC 모니터링](#docker-grafana-prometeus-활용한-다중-pc-모니터링)와 같이 prometheus.yml파일을 수정합니다.
+  ```yml
+  global:
+    scrape_interval:     15s
+
+  scrape_configs:
+    - job_name: 'node-exporter-170-3'
+      static_configs:
+        - targets: ['192.168.170.3:19100']
+    - job_name: 'node-exporter-100-185'
+      static_configs:
+        - targets: ['192.168.100.185:19100']
+        - targets: ['192.168.100.185:19101']
+    - job_name: 'node-exporter-70-27'
+      static_configs:
+        - targets: ['192.168.70.27:19100']
+        - targets: ['192.168.70.27:19101']
+  ```
+- Grafana ID를 6387로 입력하여 Load합니다.
+
+### 수동으로 Build 할 시
+- 위의 BugRoger/nvidia-smi-exporter GitHub를 다운받아 Dockerfile을 빌드합니다.
+  ```shell
+  docker build -t bugroger/nvidia-smi-exporter .
+  ```  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/b8ee4fa6-d57d-4a9d-b325-9185e3cc333b"/>  
+- 이후 Docker Run을 합니다.
+- Docker Image 공유
+  > 또는 BugRoger nvidia-smi-exporter를 활용합니다. (https://hub.docker.com/r/bugroger/nvidia-exporter)
+  > Docker Image를 쉽게 실행할 수 있도록 다음과 같이 구성하였습니다. (https://hub.docker.com/r/juhyung1021/bugroger-nvidia-smi-exporter)
+- 다음 명령어를 통해 실행합니다.
+  ```shell
+  docker run -d --gpus all -p 19101:9401 --name=nvidia-smi-exporter juhyung1021/bugroger-nvidia-smi-exporter:latest
+  ```  
   
+</details>
