@@ -7,7 +7,7 @@
 
 ### 목표
 - [x] : [Process Poweshell 모니터링](#process-poweshell-모니터링)
-- [ ] : Docker Grafana Prometeus 활용한 모니터링
+- [x] : Docker Grafana Prometeus 활용한 모니터링
 
 ### 제작자
 [@SAgiKPJH](https://github.com/SAgiKPJH)
@@ -125,6 +125,16 @@
   ```  
   - 다음과 같이 설치가 되며 실행 됩니다.  
   <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/b6d61196-cbf1-46cd-aaa3-0f2bea272548"/>  
-  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/b36b72c0-6e44-4335-9252-605d0489f9d9"/>
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/b36b72c0-6e44-4335-9252-605d0489f9d9"/>  
+- 웹브라우저를 통해 node-expoter에 접속(http://localhost:9100/metrics)하여 정상 수집하고 있는지 확인합니다.
+- 웹브라우저를 통해 Prometeus의 Port로 접속(http://127.0.0.1:9090) -> Status > Targets > node-exporter를 확인합니다.  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/8c94ea7c-4d85-4d04-b251-644234828bf7"/>  
+- 마찬가지로 Grafana로 접속(http://127.0.0.1:3000), Login admin/admin, Menu > Dashboards > New > Imports > 1860 입력 > Load > Import >
+  - 프로메테우스 미설정시 : prometeus - Configure a new data source > Prometeus > URL 입력 (127.0.0.1 또는 LocalHost가 아닌 IP번호를 입력해야 합니다) > Save & Test  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/5b979031-3e98-47fb-8b64-cbee7b0c6cca"/>  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/f5211d3e-deca-4299-a2a0-bd2091c571f0"/>
+
+
+
 
 
