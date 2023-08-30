@@ -7,8 +7,8 @@
 
 ### 목표
 - [x] : [Process Poweshell 모니터링](#process-poweshell-모니터링)
-- [x] : Docker Grafana Prometeus 활용한 모니터링
-- [ ] : Docker Grafana Prometeus 활용한 다중 PC 모니터링
+- [x] : [Docker Grafana Prometeus 활용한 모니터링](#docker-grafana-prometeus-활용한-모니터링)
+- [ ] : [Docker Grafana Prometeus 활용한 다중 PC 모니터링](#docker-grafana-prometeus-활용한-다중-pc-모니터링)
 
 ### 제작자
 [@SAgiKPJH](https://github.com/SAgiKPJH)
@@ -139,7 +139,67 @@
 
 # Docker Grafana Prometeus 활용한 다중 PC 모니터링
 
-- 기존 [Docker Grafana Prometeus 활용한 모니터링](#docker-grafana-prometeus-활용한-모니터링)
+- 기존 [Docker Grafana Prometeus 활용한 모니터링](#docker-grafana-prometeus-활용한-모니터링)에서 다음 내용을 추가합니다.
+  - Port를 변경합니다. (3000 -> 13000, 9090 -> 19090, 9000 -> 19000)
+  - Prometeus에서 입력 Port를 추가합니다. (총 2대의 PC 정보를 추가하기 때문에 2개의 Port를 추가합니다)
+  - 각 PC에 node-expoter docker를 실행합니다.
+- docker-compose.yml
+  ```yml
+  version: '3'
+  services:
+    node-exporter:
+      image: prom/node-exporter
+      ports:
+        - 19100:9100
+
+    prometheus:
+      image: prom/prometheus
+      ports:
+        - 19090:9090
+      volumes:
+        - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+    grafana:
+      image: grafana/grafana
+      ports:
+        - 13000:3000
+
+  networks:
+    promnet:
+      driver: bridge
+  ```
+- prometeus.yml을 작성하여 환경을 설정합니다.
+  ```yml
+  global:
+    scrape_interval:     15s
+
+  scrape_configs:
+    - job_name: 'node-exporter-170-3'
+      static_configs:
+        - targets: ['192.168.170.3:19100']
+    - job_name: 'node-exporter-100-185'
+      static_configs:
+        - targets: ['192.168.100.185:19100']
+    - job_name: 'node-exporter-70-27'
+      static_configs:
+        - targets: ['192.168.70.27:19100']
+  ```
+- 다음 명령어를 통해 실행합니다.
+  ```shell
+  cd "Docker-Compose Directory"
+  docker-compose -f docker-compose.yml up -d
+  ```  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/5b74553f-a249-427e-8509-6bb8496b32bf"/>  
+- 각 PC에는 다음을 통해 node-expoter를 구성합니다.
+  ```shell
+  docker run -d -p 19100:9100 --name=node-exporter prom/node-exporter
+  ```  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/2c9a2335-2fff-48d5-b3dd-cbabb4a7e25d"/>  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/22b98722-09ab-4f8b-b002-1af1ae9cdd80"/>  
+- http://http://localhost:19090에 접근하여 Prometheus가 정상 수집하는지 확인한다.
+  - Status > Targets
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/66b75e1a-069a-4f15-95b0-4bce74b7bd41"/>
 
 
 
+  
