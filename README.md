@@ -200,7 +200,7 @@
   - Status > Targets  
   <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/66b75e1a-069a-4f15-95b0-4bce74b7bd41"/>
 - 다음과 같이 상태를 확인할 수 있습니다.   
-  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/9a9f42c5-3b12-4314-86d7-fa20fe269ee4"/>  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/d13fc51d-69bc-4903-add0-c04f326fa64a"/>  
 - Docker Compose를 Down(삭제)을 할 때는 다음과 같이 합니다.
   ```bash
   docker-compose -f docker-compose.yml down 
