@@ -227,7 +227,7 @@
   ```bash
   nvidia-docker run -d --rm -p 19101:9400 --name=nvidia-dcgm-exporter nvcr.io/nvidia/k8s/dcgm-exporter:3.2.5-3.1.7-ubuntu20.04
   ```
-- 다음과 같이 정상동작하는지 확인합니다.  
+- 다음과 같이 Exporter가 정상 수집하는지 확인합니다.  
   - `curl localhost:19101/metrics`
   - 또는 사이트 `http://localhost:19101/metrics` 접근합니다.  
   <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/8b0e4f55-af85-4bdb-85f4-50227155e75e" />
@@ -273,6 +273,20 @@
   ```
 - 단, Docker-Compose를 위한 NVIDIA 관련 파일을 설치해야 합니다.  
 </details>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
 <details>  
 <summary>보다 더 자세히 알아보기</summary>  
