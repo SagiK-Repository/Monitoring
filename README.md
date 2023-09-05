@@ -201,10 +201,11 @@
   <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/66b75e1a-069a-4f15-95b0-4bce74b7bd41"/>
 - 다음과 같이 상태를 확인할 수 있습니다.   
   <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/9a9f42c5-3b12-4314-86d7-fa20fe269ee4"/>  
-- Docker Compose를 Down을 할 때는 다음과 같이 합니다.
+- Docker Compose를 Down(삭제)을 할 때는 다음과 같이 합니다.
   ```bash
   docker-compose -f docker-compose.yml down 
   ```
+- 이미 실행중인 Docker Compose 내용을 업데이트 할 경우엔, 처음 실행한 내용과 같이 명령어를 입력합니다.
 
 
 <br/><br/>
