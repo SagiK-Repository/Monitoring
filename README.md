@@ -213,6 +213,66 @@
 
 - Nvidia smi Expoter를 통해 GPU 상태를 모니터링 합니다.
 
+### NVIDIA DCGM-Exporter
+
+- Nvidia에서 제공하는 Expoter가 존재합니다.
+  - [GitHub NVIDIA/dcgm-expoter](https://github.com/NVIDIA/dcgm-exporter)
+  - [DockerHub NVIDIA/dcgm-expoter](https://hub.docker.com/r/nvidia/dcgm-exporter)
+- 다음과 같이 Docker Run 합니다.
+  ```bash
+  docker run -d --gpus all --rm -p 19101:9400 --name=nvidia-dcgm-exporter nvcr.io/nvidia/k8s/dcgm-exporter:3.2.5-3.1.7-ubuntu20.04
+  ```
+  - `unknown flag : --gpus` -> 버전 차이로 나타난 문제, 다음과 같이 입력합니다. (https://kkkkhd.tistory.com/426)
+  ```bash
+  nvidia-docker run -d --rm -p 19101:9400 --name=nvidia-dcgm-exporter nvcr.io/nvidia/k8s/dcgm-exporter:3.2.5-3.1.7-ubuntu20.04
+  ```
+- 다음과 같이 정상동작하는지 확인합니다.  
+  - `curl localhost:19101/metrics`
+  - 또는 사이트 `http://localhost:19101/metrics` 접근합니다.  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/8b0e4f55-af85-4bdb-85f4-50227155e75e" />
+- Grafana는 다음과 같이 진행합니다.  
+  - 사이트 [Grafana Nvidia GPU](https://grafana.com/grafana/dashboards/18288-nvidia-gpu/) DashBoard를 띄웁니다.
+  - Grafana ID를 18288로 입력하여 Load합니다.
+ 
+<details>  
+<summary>docker compose nvidia 추가한 내용 확인</summary>  
+
+- 위 nvidia를 추가한 docker compose를 아래와 같이 구성할 수 있습니다.  
+  ```yml
+  version: '3'
+  services:
+    node-exporter:
+      image: prom/node-exporter
+      ports:
+        - 19100:9100
+
+    prometheus:
+      image: prom/prometheus
+      ports:
+        - 19090:9090
+      volumes:
+        - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+    grafana:
+      image: grafana/grafana
+      ports:
+        - 13000:3000
+
+    nvidia-dcgm-exporter:
+      image: nvcr.io/nvidia/k8s/dcgm-exporter:3.2.5-3.1.7-ubuntu20.04
+      ports:
+        - 19101:9400
+      runtime: nvidia
+
+  networks:
+    promnet:
+      driver: bridge
+  ```
+</details>  
+  
+<details>  
+<summary>보다 더 자세히 알아보기</summary>  
+
 ### utkuozdemir nvidia_gpu_exporter
 - 활용할 nvidia-smi-expoter은 다음과 같습니다.
   - [GitHub utkuozdemir/nvidia_gpu_exporter](https://github.com/utkuozdemir/nvidia_gpu_exporter)
@@ -291,9 +351,6 @@
 
 
 <br/>
-
-<details>  
-<summary>보다 더 자세히 알아보기</summary>  
 
 ### BugRoger nvidia-expoter
 
