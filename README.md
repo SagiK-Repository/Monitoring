@@ -9,7 +9,7 @@
 - [x] : [Process Poweshell 모니터링](#process-poweshell-모니터링)
 - [x] : [Docker Grafana Prometeus 활용한 모니터링](#docker-grafana-prometeus-활용한-모니터링)
 - [x] : [Docker Grafana Prometeus 활용한 다중 PC 모니터링](#docker-grafana-prometeus-활용한-다중-pc-모니터링)
-- [ ] : [Docker Grafana Prometeus 활용한 nvidia GPU 모니터링](#docker-grafana-prometeus-활용한-nvidia-gpu-모니터링)
+- [x] : [Docker Grafana Prometeus 활용한 nvidia GPU 모니터링](#docker-grafana-prometeus-활용한-nvidia-gpu-모니터링)
 
 ### 제작자
 [@SAgiKPJH](https://github.com/SAgiKPJH)
@@ -232,8 +232,10 @@
   - 또는 사이트 `http://localhost:19101/metrics` 접근합니다.  
   <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/8b0e4f55-af85-4bdb-85f4-50227155e75e" />
 - Grafana는 다음과 같이 진행합니다.  
-  - 사이트 [Grafana Nvidia GPU](https://grafana.com/grafana/dashboards/18288-nvidia-gpu/) DashBoard를 띄웁니다.
-  - Grafana ID를 18288로 입력하여 Load합니다.
+  - 사이트 [Grafana NVIDIA DCGM Exporter Dashboard](https://grafana.com/grafana/dashboards/12239-nvidia-dcgm-exporter-dashboard/) DashBoard를 띄웁니다.
+  - Grafana ID를 12239로 입력하여 Load합니다.  
+  <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/2ac8ab43-aa62-4fc4-bdfa-55ef169d8861" />
+
  
 <details>  
 <summary>docker compose nvidia 추가한 내용 확인</summary>  
@@ -269,6 +271,7 @@
     promnet:
       driver: bridge
   ```
+- 단, Docker-Compose를 위한 NVIDIA 관련 파일을 설치해야 합니다.  
 </details>  
   
 <details>  
