@@ -8,9 +8,9 @@
 ### 요약
 - powershell, docker grafana prometheus를 활용한 모니터링입니다.  
 
-<img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/02c33b6e-8cae-4fce-a903-72ac148fb632" width="33%"/>
-<img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/d13fc51d-69bc-4903-add0-c04f326fa64a" width="33%"/>
-<img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/2ac8ab43-aa62-4fc4-bdfa-55ef169d8861" width="33%"/>
+<img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/02c33b6e-8cae-4fce-a903-72ac148fb632" width="30%"/>
+<img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/d13fc51d-69bc-4903-add0-c04f326fa64a" width="30%"/>
+<img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/2ac8ab43-aa62-4fc4-bdfa-55ef169d8861" width="30%"/>
 
 ### 목표
 - [x] : [Process Poweshell 모니터링](#process-poweshell-모니터링)
