@@ -233,6 +233,7 @@
   <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/8b0e4f55-af85-4bdb-85f4-50227155e75e" />
 - Grafana는 다음과 같이 진행합니다.  
   - 사이트 [Grafana NVIDIA DCGM Exporter Dashboard](https://grafana.com/grafana/dashboards/12239-nvidia-dcgm-exporter-dashboard/) DashBoard를 띄웁니다.
+  - 또는 다음 사이트를 활용할 수 있습니다. (ID : 15117) [Grafana NVIDIA DCGM Exporter](https://grafana.com/grafana/dashboards/15117-nvidia-dcgm-exporter/)
   - Grafana ID를 12239로 입력하여 Load합니다.  
   <img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/2ac8ab43-aa62-4fc4-bdfa-55ef169d8861" />
 
