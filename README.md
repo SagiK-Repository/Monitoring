@@ -5,6 +5,11 @@
 # Monitoring
 모니터링에 대한 모든 할 수 있는 내용을 정리합니다.
 
+### 요약
+<img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/02c33b6e-8cae-4fce-a903-72ac148fb632" width="29%"/>
+<img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/d13fc51d-69bc-4903-add0-c04f326fa64a" width="29%"/>
+<img src="https://github.com/SagiK-Repository/Monitoring/assets/66783849/2ac8ab43-aa62-4fc4-bdfa-55ef169d8861" width="29%"/>
+
 ### 목표
 - [x] : [Process Poweshell 모니터링](#process-poweshell-모니터링)
 - [x] : [Docker Grafana Prometeus 활용한 모니터링](#docker-grafana-prometeus-활용한-모니터링)
