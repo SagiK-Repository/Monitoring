@@ -1,22 +1,22 @@
-  version: '3'
-  services:
-    node-exporter:
-      image: prom/node-exporter
-      ports:
-        - 9100:9100
+version: '3'
+services:
+  node-exporter:
+    image: prom/node-exporter
+    ports:
+      - 19100:9100
 
-    prometheus:
-      image: prom/prometheus
-      ports:
-        - 9090:9090
-      volumes:
-        - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 19090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
 
-    grafana:
-      image: grafana/grafana
-      ports:
-        - 3000:3000
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 13000:3000
 
-  networks:
-    promnet:
-      driver: bridge
+networks:
+  promnet:
+    driver: bridge

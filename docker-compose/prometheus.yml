@@ -2,6 +2,10 @@ global:
   scrape_interval:     15s
 
 scrape_configs:
-  - job_name: 'node-exporter'
+  - job_name: '192.168.162.1'
     static_configs:
-      - targets: ['node-exporter:9100']
+      - targets: ['192.168.162.1:19100']
+
+  - job_name: '192.168.162.1-GPU'
+    static_configs:
+      - targets: ['192.168.162.1:19101']
