@@ -9,3 +9,7 @@ scrape_configs:
   - job_name: '192.168.162.1-GPU'
     static_configs:
       - targets: ['192.168.162.1:19101']
+
+  - job_name: '192.168.0.69'
+    static_configs:
+      - targets: ['192.168.0.69:19101']
