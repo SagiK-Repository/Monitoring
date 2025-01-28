@@ -1,0 +1,14 @@
+version: '3'
+services:
+  node-exporter:
+    image: prom/node-exporter
+    ports:
+      - 19100:9100
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  nvidia-dcgm-exporter:
+    image: nvcr.io/nvidia/k8s/dcgm-exporter:3.2.5-3.1.7-ubuntu20.04
+    ports:
+      - 19101:9400
+    runtime: nvidia

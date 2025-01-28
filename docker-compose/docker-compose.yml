@@ -4,6 +4,8 @@ services:
     image: prom/node-exporter
     ports:
       - 19100:9100
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   prometheus:
     image: prom/prometheus
